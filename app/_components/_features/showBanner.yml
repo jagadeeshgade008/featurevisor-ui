@@ -1,0 +1,33 @@
+# features/showBanner.yml
+description: Show banner
+tags:
+  - all
+
+# this makes sure the same User ID consistently gets the same variation
+bucketBy: userId
+
+# optionally add variations for running a/b tests
+variations:
+  - value: control
+    weight: 50 # out of a total of 100
+
+  - value: treatment
+    weight: 50 # total sum of weights has to be 100
+
+environments:
+  staging:
+    rules:
+      - key: "1"
+        segments: "*" # in staging, we want to show the banner to everyone
+        percentage: 100
+  production:
+    rules:
+      # in production, we want to test the feature in Germany first, and
+      # it will be `true` variation for 50% of the traffic
+      - key: "1"
+        segments: germany
+        percentage: 50
+
+      - key: "2"
+        segments: "*" # everyone
+        percentage: 0 # disabled for everyone else
