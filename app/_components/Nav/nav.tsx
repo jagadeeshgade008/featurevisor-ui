@@ -11,6 +11,8 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import {ROUTES} from '_constants/index';
+
 import { NextRouter } from 'next/router';
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
@@ -63,16 +65,16 @@ const App = ({ children }: { children: React.ReactNode }) => {
             <Sidenav  >
               <Sidenav.Body>
                 <Nav activeKey={pathname} >
-                  <Nav.Item eventKey="/attributes" as={Link} href="/attributes" >
+                  <Nav.Item eventKey={ROUTES.ATTRIBUTES} as={Link} href={ROUTES.ATTRIBUTES} >
                     Attributes
                   </Nav.Item>
-                  <Nav.Item eventKey="/segments" as={Link} href="/segments" >
+                  <Nav.Item eventKey={ROUTES.SEGMENTS} as={Link} href={ROUTES.SEGMENTS}>
                     Segments
                   </Nav.Item>
-                  <Nav.Item eventKey="/features" as={Link} href="/features">
+                  <Nav.Item eventKey={ROUTES.FEATURES} as={Link} href={ROUTES.FEATURES}>
                     Features
                   </Nav.Item>
-                  <Nav.Item eventKey="/groups" as={Link} href="/groups">
+                  <Nav.Item eventKey={ROUTES.GROUPS} as={Link} href={ROUTES.GROUPS}>
                     Groups
                   </Nav.Item>
                 </Nav>

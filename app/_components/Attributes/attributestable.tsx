@@ -6,6 +6,7 @@ import AtributeForm from '_components/Attributes/attributestableform';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AttributeType } from '_types';
+import {ROUTES} from '_constants/index';
 
 import {deleteAttribute as deleteAttributeAction} from '_actions/index';
 
@@ -21,7 +22,8 @@ export default function AttributesTable({ data }: { data: Attribute[] }) {
 
   const deleteAttribute = (name: string) => {
     deleteAttributeAction(name);
-    router.push('/attributes');
+    // router.push('/attributes');
+    router.push(ROUTES.ATTRIBUTES);
   }
 
   return (
@@ -29,7 +31,10 @@ export default function AttributesTable({ data }: { data: Attribute[] }) {
       <div className='w-100 d-flex justify-between align-center py-3'>
         <h1>Attributes</h1>
         <AtributeForm open={open} setOpen={setOpen} value={selectedAttribute} type={actionType} />
-        <Button appearance="primary" onClick={() => setOpen(true)}>
+        <Button appearance="primary" onClick={() => {
+          setActionType('CREATE');
+          setOpen(true)
+          }}>
           Add Attribute
         </Button>
       </div>

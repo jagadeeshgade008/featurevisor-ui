@@ -1,10 +1,12 @@
 import { Drawer, RadioGroup, Radio, ButtonToolbar, Button, Placeholder } from 'rsuite';
 import { useState, useRef, useEffect } from 'react';
 import { Form, Schema, SelectPicker } from 'rsuite';
+import { Notification, useToaster } from 'rsuite';
 
-import { Attribute,AttributeType } from '_types';
-import {addAttribute,editAttribute} from '_actions/index';
+import { Attribute, AttributeType } from '_types';
+import { addAttribute, editAttribute } from '_actions/index';
 import { useRouter } from 'next/navigation';
+// import { revalidatePath } from 'next/cache'
 
 type TextFieldProps = React.ComponentProps<typeof Form.Control> & { label: string; placeholder?: string; };
 
@@ -18,10 +20,9 @@ function TextField(props: TextFieldProps) {
     );
 }
 
-export default function AttributeDrawer({ open, setOpen , value = null , type="CREATE" }: { open: boolean, setOpen: (open: boolean) => void, value: Attribute | null, type: string }) {
+export default function AttributeDrawer({ open, setOpen, value = null, type = "CREATE" }: { open: boolean, setOpen: (open: boolean) => void, value: Attribute | null, type: string }) {
     const router = useRouter();
-
-    const formRef = useRef<React.ComponentProps<typeof Form>>();
+    const toaster = useToaster();
 
     const AttributeTypeList = ['boolean', 'string', 'integer', 'double', 'date'];
     const AttributeTypeListData = AttributeTypeList.map((type) => {
@@ -50,15 +51,13 @@ export default function AttributeDrawer({ open, setOpen , value = null , type="C
             });
         }
     }
-    , [value]);
+        , [value]);
 
-    const handleSubmit = (formStatus: boolean) => {
+    const handleSubmit = async (formStatus: boolean) => {
         if (!formStatus) {
             // console.error('Form Error');
             return;
         }
-        // console.log(formValue);
-        // setOpen(false);
 
         const attribute: Attribute = {
             name: formValue.name,
@@ -66,14 +65,43 @@ export default function AttributeDrawer({ open, setOpen , value = null , type="C
             type: formValue.type as AttributeType,
         };
         if (type === 'CREATE') {
-            addAttribute(attribute);
+            let response = await addAttribute(attribute);
+            if (!response.status) {
+                toaster.push(<Notification type="error" header="Error" closable>
+                    {response.message}
+                </Notification>, {
+                    placement: 'topEnd'
+                });
+                return;
+            } else {
+                toaster.push(<Notification type="success" header="Success" closable>
+                    Attribute added successfully!
+                </Notification>, {
+                    placement: 'topEnd'
+                });
+            }
         } else {
-            editAttribute(attribute);
+            let response = await editAttribute(attribute, value?.name || '');
+            if (!response.status) {
+                toaster.push(<Notification type="error" header="Error" closable>
+                    {response.message}
+                </Notification>, {
+                    placement: 'topEnd'
+                });
+                return;
+            } else {
+                toaster.push(<Notification type="success" header="Success" closable>
+                    Attribute updated successfully!
+                </Notification>, {
+                    placement: 'topEnd'
+                });
+            }
         }
 
         setOpen(false);
 
         router.push('/attributes');
+        // revalidatePath('/attributes');
 
     }
 
@@ -86,7 +114,7 @@ export default function AttributeDrawer({ open, setOpen , value = null , type="C
                     </Drawer.Title>
                 </Drawer.Header>
                 <Drawer.Body style={{ padding: '12px' }}>
-                    <Form fluid model={model} onSubmit={handleSubmit} ref={formRef} formValue={formValue} onChange={(formValue) => setFormValue({
+                    <Form fluid model={model} onSubmit={handleSubmit} formValue={formValue} onChange={(formValue) => setFormValue({
                         name: formValue.name,
                         description: formValue.description,
                         type: formValue.type,
