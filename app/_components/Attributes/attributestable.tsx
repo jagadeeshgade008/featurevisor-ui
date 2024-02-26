@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { AttributeType } from '_types';
 import {ROUTES} from '_constants/index';
 
+
 import {deleteAttribute as deleteAttributeAction} from '_actions/index';
 
 const { Column, HeaderCell, Cell } = Table;
