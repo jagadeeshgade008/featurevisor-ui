@@ -1,7 +1,13 @@
+
+import { getSegments } from "_actions/segments";
+
+import SegmentsTable from "_components/segments/segmentstable";
+
 export default function Segments() {
+  let segments = getSegments();
   return (
     <main>
-      <h1>Segments</h1>
+      <SegmentsTable data={segments} />
     </main>
   );
 }

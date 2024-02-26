@@ -2,7 +2,7 @@
 import { Attribute } from '_types';
 import { Button } from 'rsuite';
 import { Table } from 'rsuite';
-import AtributeForm from '_components/Attributes/attributestableform';
+import AtributeForm from '_components/attributes/attributestableform';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AttributeType } from '_types';

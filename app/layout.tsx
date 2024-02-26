@@ -4,7 +4,7 @@ import "./globals.css";
 import 'rsuite/dist/rsuite-no-reset.min.css';
 import { CustomProvider } from 'rsuite';
 
-import SidenavComponent from "_components/Nav/nav";
+import SidenavComponent from "_components/nav/nav";
 
 const inter = Inter({ subsets: ["latin"] });
 

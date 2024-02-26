@@ -1,0 +1,10 @@
+# segments/iPhoneUS.yml
+description: iPhone users in the United States
+conditions:
+  - attribute: country
+    operator: equals
+    value: us
+
+  - attribute: device
+    operator: equals
+    value: iPhone

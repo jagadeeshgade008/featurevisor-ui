@@ -1,6 +1,6 @@
 
 import {getAttributes} from '_actions/index';
-import AttributesTable from '_components/Attributes/attributestable';
+import AttributesTable from '_components/attributes/attributestable';
 
 export default function Attributes(){
     let attributes = getAttributes();
