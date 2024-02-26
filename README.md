@@ -34,3 +34,8 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+## FEATUREVISOR UI
+
+This project is dedicated to the development of a user interface (UI) for a [FEATUREVISOR](https://github.com/featurevisor/featurevisor). The UI will provide an intuitive and user-friendly way to interact with the file system. All the files related to this project will be generated and stored in the following directory: app/_features. This directory will serve as the central location for all the project's resources, making it easier to manage and navigate through the project's files.
